@@ -1,0 +1,3 @@
+namespace hblog {
+    App.main();
+}

@@ -1,9 +1,8 @@
 from flask import Flask
-flask = Flask(__name__)
 import config
+from WebUI import *
 
-@flask.route(config.webPath)
-def main():
-    return "Welcome!"
+flask = Flask(__name__)
+webUI = WebUI(flask)
 
 flask.run()
