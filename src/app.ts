@@ -4,7 +4,7 @@ namespace hblog {
 
     export class App {
         public static main(): number {
-            console.log('Now running; web path is: ' + webPath);
+            console.log('Now running; web path is: "' + webPath + '"');
             return 0;
         }
     }
