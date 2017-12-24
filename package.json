@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/hinst/h-blog-eng/issues"
   },
-  "homepage": "https://github.com/hinst/h-blog-eng#readme"
+  "homepage": "https://github.com/hinst/h-blog-eng#readme",
+  "dependencies": {
+    "@types/jquery": "^3.2.17"
+  }
 }
