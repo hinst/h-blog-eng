@@ -2,8 +2,9 @@
     "compilerOptions": {
         "target": "es5",
         "module": "system",
-        "sourceMap": true,
         "sourceRoot": "./src/",
-        "outFile": "./js-bin/app.js"
+        "outFile": "./js-bin/app.js",
+        "sourceMap": true,
+        "inlineSources": true
     }
 }

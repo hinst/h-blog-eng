@@ -11,13 +11,10 @@ class WebUI:
 
         @flask.route(webPath)
         def main():
-            return 'Welcome!'
-
-        @flask.route(webPath + '/js-bin/<string:fileName>')
-        def js_bin(fileName):
-            return send_file('../js-bin/' + fileName, conditional=True)
+            return send_file("../html-bin/layout.html", conditional=True)
 
         self.registerStaticFileFolder('html-bin')
+        self.registerStaticFileFolder('js-bin')
         self.registerStaticFileFolder('css-3rd')
 
     def registerStaticFileFolder(self, folder: str):
