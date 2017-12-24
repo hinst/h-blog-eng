@@ -26,7 +26,8 @@ class WebUI:
         with open('src/layout.html', 'r') as file:
             content: str = file.read()
             content = content.replace('_web_path_', self.webPath)
-            print(content)
+            with open('html-bin/layout.html', 'r') as outputFile:
+                outputFile.write(content)
 
     def debugListFiles(self):
         print("Files:")
