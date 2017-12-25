@@ -44,7 +44,7 @@ class WebUI:
 
     def getBlogEntryList(self):
         files = os.listdir("blog")
-        print(type(files))
+        files = [os.path.splitext(filename)[0] for filename in files]
         return flask.jsonify(files)
 
         
