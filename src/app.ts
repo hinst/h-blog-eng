@@ -11,12 +11,21 @@ namespace hblog {
             return 0;
         }
 
-        public run(): void {
-            console.log(App.checkRoute("/h-blog"));
+        run() {
+            if (false) console.log(App.checkRoute("/h-blog"));
+            this.goMainPage();
         }
 
         public static checkRoute(path: string): boolean {
             return document.location.pathname.indexOf(path) == 0;
+        }
+
+        mainPage: MainPage;
+
+        goMainPage() {
+            jQuery.getJSON(webPath + "/entries", null, (data) => {
+                this.mainPage = new MainPage(data = data);
+            });
         }
     }
 
