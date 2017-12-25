@@ -2,7 +2,7 @@
 namespace hblog {
 
     export var webPath: string;
-    export var pagePath: string = document.location.href;
+    export var pagePath: string = document.location.pathname;
 
     export class App {
         public static main(): number {
@@ -13,6 +13,8 @@ namespace hblog {
         }
 
         run() {
+            if (App.checkRoute(webPath + "/page/entry"))
+                this.goEntryPage();
             this.goMainPage();
         }
 
@@ -20,18 +22,22 @@ namespace hblog {
             return document.location.pathname.indexOf(path) == 0;
         }
 
-        mainPage: MainPage;
-
         get mainContainer(): JQuery {
             return $("#mainContainer");
         }
 
+        entryListPanel: EntryListPanel;
+
         goMainPage() {
-            if (this.mainPage == null) {
-                this.mainPage = new MainPage();
-                this.mainContainer.append(this.mainPage.ui);
+            if (this.entryListPanel == null) {
+                this.entryListPanel = new EntryListPanel();
+                this.mainContainer.append(this.entryListPanel.ui);
             }
-            this.mainPage.refresh();
+            this.entryListPanel.refresh();
+        }
+
+        goEntryPage() {
+            const entryPanel = new EntryPanel("");
         }
     }
 
