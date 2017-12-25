@@ -10,8 +10,8 @@ namespace hblog {
                 this.ui.remove();
         }
 
-        public static createDiv(): JQuery {
-            return $("<div></div>");
+        public static createElement(tag: string): JQuery {
+            return $("<" + tag + "></" + tag + ">");
         }
 
         public refresh() {
