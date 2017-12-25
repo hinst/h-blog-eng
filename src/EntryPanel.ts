@@ -26,6 +26,8 @@ namespace hblog {
             const header = Panel.createElement("h1");
             header.addClass("w3-panel w3-light-grey");
             header.append(this.makeHeadHyperlink());
+            header.css("margin-top", "8px");
+            header.css("margin-bottom", "8px");
             return header;
         }
 
