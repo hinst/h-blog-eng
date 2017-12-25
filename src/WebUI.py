@@ -12,9 +12,10 @@ class WebUI:
         self.prepareLayout()
         @flask.route(webPath)
         def main():
-            global flask
             return self.getLayoutContent()
-            return flask.send_file("../html-bin/layout.html", conditional=True)
+        @flask.route(webPath + "/page/<path:path>")
+        def page(path):
+            return self.getLayoutContent()
         @flask.route(webPath + "/entries")
         def entries(): return self.getBlogEntryList()
         for fileDir in self.fileDirs:

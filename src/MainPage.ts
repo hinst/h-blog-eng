@@ -14,6 +14,7 @@ namespace hblog {
 
         set data(data: Array<string>) {
             this.ui.empty();
+            for (let i = 0; i < 100; i++)
             for (const item of data) {
                 const panel = Panel.createElement("div");
                 panel.addClass("w3-leftbar");

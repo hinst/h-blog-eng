@@ -33,13 +33,6 @@ namespace hblog {
             }
             this.mainPage.refresh();
         }
-
-        _activePanel: Panel;
-
-        set activePanel(a: Panel) {
-            this._activePanel = a;
-            //this._activePanel.attach(this.mainContainer);
-        }
     }
 
 }
