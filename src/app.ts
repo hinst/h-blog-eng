@@ -40,6 +40,7 @@ namespace hblog {
         goEntryPage() {
             var entryName = this.pagePath.args["entryName"];
             const entryPanel = new EntryPanel(entryName);
+            entryPanel.refresh();
             this.mainContainer.append(entryPanel.ui);
         }
     }
