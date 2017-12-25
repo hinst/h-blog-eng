@@ -27,9 +27,14 @@ namespace hblog {
             return $("#mainContainer");
         }
 
+        set title(a: string) {
+            $("#titleSpan").text(a);
+        }
+
         entryListPanel: EntryListPanel;
 
         goMainPage() {
+            this.title = "Главная страница";
             if (this.entryListPanel == null) {
                 this.entryListPanel = new EntryListPanel();
                 this.mainContainer.append(this.entryListPanel.ui);
@@ -38,6 +43,7 @@ namespace hblog {
         }
 
         goEntryPage() {
+            this.title = "Запись";
             var entryName = this.pagePath.args["entryName"];
             const entryPanel = new EntryPanel(entryName);
             entryPanel.refresh();
