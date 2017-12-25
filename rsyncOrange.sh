@@ -1,0 +1,1 @@
+rsync -av --exclude-from rsyncExclude.txt ./ hinst@192.168.1.36:/home/hinst/ufd/App/h-blog-eng
