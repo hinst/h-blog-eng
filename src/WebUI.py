@@ -40,11 +40,11 @@ class WebUI:
         self.flask.add_url_rule(url, view_func=fileDeliverer)
     
     def prepareLayout(self):
-        with open('html-bin/layout.html', 'w') as outputFile:
+        with io.open('html-bin/layout.html', mode='w', encoding="utf-8") as outputFile:
             outputFile.write(self.getLayoutContent())
 
     def getLayoutContent(self):
-        with open('src/layout.html', 'r') as file:
+        with io.open('src/layout.html', mode='r', encoding="utf-8") as file:
             content: str = file.read()
             content = content.replace('_web_path_', self.webPath)
             return content
