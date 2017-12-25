@@ -1,8 +1,10 @@
 /// <reference path="Panel.ts"/>
+/// <reference path="WebPath.ts"/>
 namespace hblog {
 
     export var webPath: string;
     export var pagePath: string = document.location.pathname;
+    export var pageArgs: string = document.location.search;
 
     export class App {
         public static main(): number {
@@ -12,14 +14,13 @@ namespace hblog {
             return 0;
         }
 
-        run() {
-            if (App.checkRoute(webPath + "/page/entry"))
-                this.goEntryPage();
-            this.goMainPage();
-        }
+        public pagePath = new hts.WebPath();
 
-        public static checkRoute(path: string): boolean {
-            return document.location.pathname.indexOf(path) == 0;
+        run() {
+            if (this.pagePath.checkRouteMatch(webPath + "/page/entry"))
+                this.goEntryPage();
+            else
+                this.goMainPage();
         }
 
         get mainContainer(): JQuery {
@@ -37,7 +38,9 @@ namespace hblog {
         }
 
         goEntryPage() {
-            const entryPanel = new EntryPanel("");
+            var entryName = this.pagePath.args["entryName"];
+            const entryPanel = new EntryPanel(entryName);
+            this.mainContainer.append(entryPanel.ui);
         }
     }
 

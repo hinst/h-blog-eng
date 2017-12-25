@@ -23,7 +23,7 @@ namespace hts {
                     const parts = row.split("=");
                     if (parts.length < 2)
                         parts.push("");
-                    args[parts[0]] = parts[1];
+                    args[parts[0]] = decodeURIComponent(parts[1]);
                 }
             }
             this.args = args;

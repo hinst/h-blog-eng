@@ -29,7 +29,7 @@ namespace hblog {
             panel.css("padding-left", "3px");
 
             const hyperlink = Panel.createElement("a");
-            hyperlink.attr("href", webPath + "/entry/" + encodeURIComponent(entryName));
+            hyperlink.attr("href", webPath + "/page/entry?entryName=" + encodeURIComponent(entryName));
             hyperlink.text(entryName);
             panel.append(hyperlink);
             panel.append(Panel.createElement("span").text(" "));
