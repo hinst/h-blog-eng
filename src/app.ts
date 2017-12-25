@@ -43,6 +43,10 @@ namespace hblog {
             entryPanel.refresh();
             this.mainContainer.append(entryPanel.ui);
         }
+
+        public static getEntryPath(entryName): string {
+            return webPath + "/page/entry?entryName=" + encodeURIComponent(entryName);
+        }
     }
 
 }

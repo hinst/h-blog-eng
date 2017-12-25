@@ -16,7 +16,6 @@ namespace hblog {
 
         set data(data: Array<string>) {
             this.ui.empty();
-            for (let i = 0; i < 10; i++)
             for (const entryName of data) {
                 this.renderEntry(entryName);
             }
@@ -29,7 +28,7 @@ namespace hblog {
             panel.css("padding-left", "3px");
 
             const hyperlink = Panel.createElement("a");
-            hyperlink.attr("href", webPath + "/page/entry?entryName=" + encodeURIComponent(entryName));
+            hyperlink.attr("href", App.getEntryPath(entryName));
             hyperlink.text(entryName);
             panel.append(hyperlink);
             panel.append(Panel.createElement("span").text(" "));

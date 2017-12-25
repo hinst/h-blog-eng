@@ -29,8 +29,12 @@ namespace hts {
             this.args = args;
         }
 
-        public checkRouteMatch(route: string) {
+        public checkRouteMatch(route: string): boolean {
             return this.path.indexOf(route) == 0;
+        }
+
+        public static escapeHtml(text: string): string {
+            return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         }
     }
 }
