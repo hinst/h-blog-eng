@@ -1,3 +1,4 @@
+/// <reference path="Panel.ts"/>
 namespace hblog {
 
     export var webPath: string;
@@ -12,7 +13,6 @@ namespace hblog {
         }
 
         run() {
-            if (false) console.log(App.checkRoute("/h-blog"));
             this.goMainPage();
         }
 
@@ -22,10 +22,23 @@ namespace hblog {
 
         mainPage: MainPage;
 
+        get mainContainer(): JQuery {
+            return $("#mainContainer");
+        }
+
         goMainPage() {
-            jQuery.getJSON(webPath + "/entries", null, (data) => {
-                this.mainPage = new MainPage(data = data);
-            });
+            if (this.mainPage == null) {
+                this.mainPage = new MainPage();
+                this.mainContainer.append(this.mainPage.ui);
+            }
+            this.mainPage.refresh();
+        }
+
+        _activePanel: Panel;
+
+        set activePanel(a: Panel) {
+            this._activePanel = a;
+            //this._activePanel.attach(this.mainContainer);
         }
     }
 

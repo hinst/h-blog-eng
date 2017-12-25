@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "system",
+        "module": "none",
         "sourceRoot": "./src/",
         "outFile": "./js-bin/app.js",
         "sourceMap": true,

@@ -5,11 +5,6 @@ namespace hblog {
 
         public ui: JQuery;
 
-        public attach(target: JQuery) {
-            if (this.ui != null)
-                this.ui.appendTo(target);
-        }
-
         public detach() {
             if (this.ui != null)
                 this.ui.remove();
@@ -17,6 +12,9 @@ namespace hblog {
 
         public static createDiv(): JQuery {
             return $("<div></div>");
+        }
+
+        public refresh() {
         }
     }
 }
