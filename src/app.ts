@@ -60,6 +60,10 @@ namespace hblog {
             const windowHeight = $(window).height();
             $("#outerContainer").css("min-height", (windowHeight - $("#copyrightBar").outerHeight()) + "px");
         }
+
+        public static splitEntryName(entryName: string) {
+            return { date: entryName.split(" ", 1)[0], title: entryName.substring(entryName.indexOf(" ") + 1) };
+        }
     }
 
 }

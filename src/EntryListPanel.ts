@@ -22,14 +22,20 @@ namespace hblog {
         }
 
         renderEntry(entryName: string) {
+            const entry = App.splitEntryName(entryName);
             const panel = Panel.createElement("div");
             panel.addClass("w3-leftbar");
             panel.css("margin-bottom", "4px");
             panel.css("padding-left", "3px");
 
+            const dateSpan = Panel.createElement("span");
+            dateSpan.text(entry.date);
+            panel.append(dateSpan);
+            panel.append(Panel.createElement("span").text(" "));
+
             const hyperlink = Panel.createElement("a");
             hyperlink.attr("href", App.getEntryPath(entryName));
-            hyperlink.text(entryName);
+            hyperlink.text(entry.title);
             panel.append(hyperlink);
             panel.append(Panel.createElement("span").text(" "));
 
