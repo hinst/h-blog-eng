@@ -17,14 +17,22 @@ namespace hblog {
 
         makeHeadHyperlink() {
             const headHyperLink = Panel.createElement("a");
-            headHyperLink.text(this.entryName);
+            headHyperLink.text(App.splitEntryName(this.entryName).title);
             headHyperLink.attr("href", App.getEntryPath(this.entryName));
             return headHyperLink;
+        }
+
+        makeHeadDate() {
+            const headDate = Panel.createElement("span");
+            headDate.text(App.splitEntryName(this.entryName).date);
+            return headDate;
         }
 
         makeHeader() {
             const header = Panel.createElement("h1");
             header.addClass("w3-panel w3-light-grey");
+            header.append(this.makeHeadDate());
+            header.append(Panel.createElement("span").text(" "));
             header.append(this.makeHeadHyperlink());
             header.css("margin-top", "8px");
             header.css("margin-bottom", "8px");
