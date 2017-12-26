@@ -34,6 +34,7 @@ namespace hblog {
         makeBody(data: string) {
             const content = hts.WebPath.escapeHtml(data).replace(/\n/g, "<br/>");
             const body = Panel.createElement("div");
+            body.css("max-width", "1000px");
             body.html(content);
             return body;
         }
