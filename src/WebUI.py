@@ -4,7 +4,7 @@ import os
 import io
 
 class WebUI:
-    fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin']
+    fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
     maxContentLength = 1000 * 1000
 
     def __init__(self, flask: Flask = None, webPath = "/h-blog"):

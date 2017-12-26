@@ -43,10 +43,13 @@ namespace hblog {
             const content = this.transformText(data);
             const body = Panel.createElement("div");
             body.css("max-width", "1000px");
+            body.css("margin-left", "8px");
+            body.css("margin-right", "8px");
             body.html(content);
             const codes = body.children("pre");
             codes.css("font-family", "Consolas, Monospace");
             codes.css("font-size", "12px");
+            codes.css("border-left", "4px solid #CCC");
             codes.each((i, code) => {
                 $(code).children("br:first").remove();
                 code.innerHTML = code.innerHTML.trim().replace(/<br>/g, "\n");
