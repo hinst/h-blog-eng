@@ -41,14 +41,15 @@ namespace hblog {
             codes.css("font-size", "12px");
             codes.each((i, code) => {
                 $(code).children("br:first").remove();
-                code.innerHTML = code.innerHTML.trim();
+                code.innerHTML = code.innerHTML.trim().replace(/<br>/g, "\n");
                 window["hljs"].highlightBlock(code);
             });
             return body;
         }
 
         transformText(text: string): string {
-            text = hts.WebPath.escapeHtml(text).replace(/\n/g, "<br/>");
+            text = hts.WebPath.escapeHtml(text).replace(/\n/g, "<br>");
+            text = text.replace(/#hcode-typescript-begin/g, '<pre class="typescript">')
             text = text.replace(/#hcode-begin/g, "<pre>").replace(/#hcode-end/g, "</pre>");
             return text;
         }
