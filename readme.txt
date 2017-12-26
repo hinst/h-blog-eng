@@ -6,3 +6,6 @@ sudo pip install flask
 
 Расположение Python 3.6: требуется для запуска приложения
 /usr/local/bin/python3.6
+
+Установка Linux сервиса:
+Скопировать файл h_blog_eng в /etc/init.d

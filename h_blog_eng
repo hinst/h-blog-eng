@@ -1,0 +1,13 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          h_blog_eng
+# Required-Start:    $local_fs $network $named
+# Required-Stop:     $local_fs $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: h_blog_eng
+# Description:       h_blog_eng web app
+### END INIT INFO
+
+/sbin/runuser hinst -s /bin/bash -c "/bin/bash /home/hinst/ufd/App/h-blog-eng/assuming-control.sh $1"
