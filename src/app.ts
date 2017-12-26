@@ -21,6 +21,8 @@ namespace hblog {
                 this.goEntryPage();
             else
                 this.goMainPage();
+            this.receiveResizeEvent();
+            $(window).resize(() => this.receiveResizeEvent());
         }
 
         get mainContainer(): JQuery {
@@ -52,6 +54,11 @@ namespace hblog {
 
         public static getEntryPath(entryName): string {
             return webPath + "/page/entry?entryName=" + encodeURIComponent(entryName);
+        }
+
+        receiveResizeEvent() {
+            const windowHeight = $(window).height();
+            $("#outerContainer").css("min-height", (windowHeight - $("#copyrightBar").outerHeight()) + "px");
         }
     }
 
