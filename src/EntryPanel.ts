@@ -10,7 +10,7 @@ namespace hblog {
         }
 
         public refresh() {
-            jQuery.get(webPath + "/entry/" + this.entryName, null, (data) => {
+            jQuery.get(webPath + "/entry/" + encodeURIComponent(this.entryName), null, (data) => {
                 this.receiveShowContent(data);
             });
         }
