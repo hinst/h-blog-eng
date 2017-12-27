@@ -56,17 +56,19 @@ namespace hblog {
             codes.css("font-size", "12px");
             codes.css("border-left", "4px solid #CCC");
             codes.each((i, code) => {
-                $(code).children("br:first").remove();
-                code.innerHTML = code.innerHTML.trim().replace(/<br>/g, "\n");
+                if (false) {
+                    $(code).children("br:first").remove();
+                    code.innerHTML = code.innerHTML.trim().replace(/<br>/g, "\n");
+                }
                 window["hljs"].highlightBlock(code);
             });
         }
 
         transformText(text: string): string {
+            return new EntryContentTransformer(text).result;
             text = hts.WebPath.escapeHtml(text).replace(/\n/g, "<br>");
             text = text.replace(/#hcode-typescript-begin/g, '<pre class="typescript">')
             text = text.replace(/#hcode-begin/g, "<pre>").replace(/#hcode-end/g, "</pre>");
-            return text;
         }
 
         receiveShowContent(data: string) {

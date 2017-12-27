@@ -1,6 +1,7 @@
 namespace hblog {
     export class EntryContentTransformer {
         constructor(source: string) {
+            source = hts.WebPath.escapeHtml(source);
             const lines = source.split("\n");
             let inCode = false;
             for (let i = 0; i < lines.length; i++) {
@@ -14,7 +15,9 @@ namespace hblog {
                     lines[i] = '<pre>';
                     inCode = true;
                 }
-                if (!inCode)
+                if (inCode)
+                    lines[i] = lines[i] + '\n';
+                else
                     lines[i] = lines[i] + "<br>";
                 if (trimmedLine == "#hcode-end") {
                     lines[i] = '</pre>';
