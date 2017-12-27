@@ -46,6 +46,11 @@ namespace hblog {
             body.css("margin-left", "8px");
             body.css("margin-right", "8px");
             body.html(content);
+            this.postProcesCodes(body);
+            return body;
+        }
+
+        postProcesCodes(body: JQuery) {
             const codes = body.children("pre");
             codes.css("font-family", "Consolas, Monospace");
             codes.css("font-size", "12px");
@@ -55,7 +60,6 @@ namespace hblog {
                 code.innerHTML = code.innerHTML.trim().replace(/<br>/g, "\n");
                 window["hljs"].highlightBlock(code);
             });
-            return body;
         }
 
         transformText(text: string): string {
