@@ -2,11 +2,17 @@
 namespace hblog {
     export class EntryPanel extends Panel {
         public entryName: string;
+        entryBox: JQuery;
+        commentsPanel: CommentsPanel;
 
         public constructor(entryName: string) {
             super();
             this.entryName = entryName;
             this.ui = Panel.createElement("div")
+            this.entryBox = Panel.createElement("div");
+            this.ui.append(this.entryBox);
+            this.commentsPanel = new CommentsPanel(entryName);
+            this.ui.append(this.commentsPanel.ui);
         }
 
         public refresh() {
@@ -65,8 +71,8 @@ namespace hblog {
         }
 
         receiveShowContent(data: string) {
-            this.ui.append(this.makeHeader());
-            this.ui.append(this.makeBody(data));
+            this.entryBox.append(this.makeHeader());
+            this.entryBox.append(this.makeBody(data));
         }
     }
 }
