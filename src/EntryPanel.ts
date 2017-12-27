@@ -4,6 +4,7 @@ namespace hblog {
         public entryName: string;
         entryBox: JQuery;
         commentsPanel: CommentsPanel;
+        maxWidth = 1000;
 
         public constructor(entryName: string) {
             super();
@@ -12,6 +13,7 @@ namespace hblog {
             this.entryBox = Panel.createElement("div");
             this.ui.append(this.entryBox);
             this.commentsPanel = new CommentsPanel(entryName);
+            this.commentsPanel.ui.css("max-width", this.maxWidth + "px");
             this.ui.append(this.commentsPanel.ui);
         }
 
@@ -48,7 +50,7 @@ namespace hblog {
         makeBody(data: string) {
             const content = this.transformText(data);
             const body = Panel.createElement("div");
-            body.css("max-width", "1000px");
+            body.css("max-width", this.maxWidth + "px");
             body.css("margin-left", "8px");
             body.css("margin-right", "8px");
             body.html(content);
