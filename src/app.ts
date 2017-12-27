@@ -71,8 +71,8 @@ namespace hblog {
         }
 
         public receiveGoogleSignIn(googleUser: hts.GoogleUser) {
-            console.log("g-ok");
             this.googleUser = googleUser;
+            console.log("googleUser: '" + googleUser.getBasicProfile().getName() + "'");
             for (const receiver of this.googleSignInSuccessReceivers) {
                 receiver(googleUser);
             }
