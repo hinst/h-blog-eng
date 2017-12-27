@@ -10,11 +10,16 @@ namespace hblog {
         public static main(): number {
             console.log('Now running; web path is: "' + webPath + '"; page path is: "' + document.location.pathname + '"');
             const app = new App();
+            App.instance = app;
             app.run();
             return 0;
         }
 
         public pagePath = new hts.WebPath();
+        public static instance: App;
+        backgroundSubColor = "#f1f1f1";
+        googleSignInSuccessReceivers: Array<(googleUser: hts.GoogleUser) => void> = [];
+        googleUser: hts.GoogleUser;
 
         run() {
             if (this.pagePath.checkRouteMatch(webPath + "/page/entry"))
@@ -64,6 +69,22 @@ namespace hblog {
         public static splitEntryName(entryName: string) {
             return { date: entryName.split(" ", 1)[0], title: entryName.substring(entryName.indexOf(" ") + 1) };
         }
+
+        public receiveGoogleSignIn(googleUser: hts.GoogleUser) {
+            console.log("g-ok");
+            this.googleUser = googleUser;
+            for (const receiver of this.googleSignInSuccessReceivers) {
+                receiver(googleUser);
+            }
+        }
+
+        public clickGoogleSignIn() {
+            $("#googleSignInButton").children(":first").trigger("click");
+        }
     }
 
 }
+
+function hblog_receiveGoogleSignIn(googleUser: hts.GoogleUser) {
+    hblog.App.instance.receiveGoogleSignIn(googleUser);
+};

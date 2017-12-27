@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="_web_path_/css-3rd/w3.css">
         <!--<link rel="stylesheet" href="_web_path_/css-3rd/highlight.js/solarized-light.css">-->
         <link rel="stylesheet" href="_web_path_/css-3rd/highlight.js/idea.css">
-        <meta name="google-signin-client_id" content="343989923433-6aip61ch6cde5hcr9lr626s80go5kcet.apps.googleusercontent.com">
+        <meta name="google-signin-client_id" content="_google_signInAppId_">
         <!--<link rel="stylesheet" href="_web_path_/css/style.css">-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -18,6 +18,7 @@
             var hblog = hblog || {};
             hblog.webPath = '_web_path_';
         </script>
+        <div id="googleSignInButton" class="g-signin2" data-onsuccess="hblog_receiveGoogleSignIn" style="display:none"></div>
         <div id="outerContainer">
             <div id="mainBar" style="font-weight: bold; padding: 3px">
                 <a href="_web_path_" class="w3-btn w3-black" style="margin-right: 4px; display: inline-block; vertical-align: top">h-blog</a>

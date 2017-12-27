@@ -7,9 +7,10 @@ class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
     maxContentLength = 1000 * 1000
 
-    def __init__(self, flask: Flask = None, webPath = "/h-blog"):
+    def __init__(self, flask: Flask = None, webPath = "/h-blog", googleSignInAppId = ""):
         self.flask = flask
         self.webPath = webPath
+        self.googleSignInAppId = googleSignInAppId
         if False: self.debugListFiles()
         self.prepareLayout()
         self.startRoutes()
@@ -47,6 +48,7 @@ class WebUI:
         with io.open('src/layout.html', mode='r', encoding="utf-8") as file:
             content: str = file.read()
             content = content.replace('_web_path_', self.webPath)
+            content = content.replace("_google_signInAppId_", self.googleSignInAppId)
             return content
 
     def debugListFiles(self):
