@@ -77,3 +77,6 @@ class WebUI:
             return self.createLayoutContent()
         else:
             return flask.send_file('../html-bin/layout.html', conditional=True)
+
+    def postComment(self):
+        token = flask.request.args.get("googleUserToken")

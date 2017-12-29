@@ -19,24 +19,12 @@ namespace hblog {
             this.textBox = Panel.createElement("textarea");
             this.textBox.css("width", "100%");
 
-            this.googleButton = Panel.createElement("button");
-            this.googleButton.text("Войти в Google");
-            this.googleButton.addClass("w3-btn w3-black");
-            this.googleButton.css("vertical-align", "top");
-            this.googleButton.css("margin-right", "3px");
-            this.googleButton.on("click", () => {
-                App.instance.clickGoogleSignIn();
-            });
-
-            const sendButton = Panel.createElement("button");
-            sendButton.text("Отправить");
-            sendButton.addClass("w3-btn w3-black");
-            sendButton.css("vertical-align", "top");
-
+            const sendButton = this.createSendButton();
             const toolBar = Panel.createElement("div");
             toolBar.css("text-align", "right");
             toolBar.css("padding-top", "3px");
             toolBar.css("padding-bottom", "3px");
+            this.googleButton = this.createGoogleButton();
             toolBar.append(this.googleButton);
             toolBar.append(sendButton);
 
@@ -52,6 +40,26 @@ namespace hblog {
 
         public receiveGoogleSignIn() {
             this.googleButton.hide();
+        }
+
+        public createGoogleButton(): JQuery {
+            const googleButton = Panel.createElement("button");
+            googleButton.text("Войти в Google");
+            googleButton.addClass("w3-btn w3-black");
+            googleButton.css("vertical-align", "top");
+            googleButton.css("margin-right", "3px");
+            googleButton.on("click", () => {
+                App.instance.clickGoogleSignIn();
+            });
+            return googleButton;
+        }
+
+        public createSendButton(): JQuery {
+            const sendButton = Panel.createElement("button");
+            sendButton.text("Отправить");
+            sendButton.addClass("w3-btn w3-black");
+            sendButton.css("vertical-align", "top");
+            return sendButton;
         }
     }
 }
