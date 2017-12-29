@@ -17,5 +17,4 @@ class GoogleUser:
             urllib.parse.urlencode(query=requestArgs))
         response = request.read(self.responseLengthLimit)
         responseData = GoogleAuthResponse(json.loads(response))
-        print(responseData.sub)
         return (request.getcode() == self.httpCodeOk) and (self.appId in responseData.aud)
