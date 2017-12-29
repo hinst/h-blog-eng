@@ -5,16 +5,17 @@ import io
 from DB import *
 from GoogleUser import *
 from PostCommentRequest import*
+from Config import *
 
 class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
     maxContentLength = 1000 * 1000
 
-    def __init__(self, flask: Flask, db: DB, webPath = "/h-blog", googleSignInAppId = ""):
+    def __init__(self, flask: Flask, db: DB, config: Config):
         self.flask = flask
         self.db = db
-        self.webPath = webPath
-        self.googleSignInAppId = googleSignInAppId
+        self.webPath = config.webPath
+        self.googleSignInAppId = config.googleSignInAppId
         self.dynamicLayoutEnabled = False
         if False: self.debugListFiles()
         self.prepareLayout()
@@ -87,5 +88,8 @@ class WebUI:
     def postComment(self):
         print("postComment")
         requestData = PostCommentRequest(dictionary = flask.request.get_json())
-        print(requestData.comment)
-        #GoogleUser().verify(token)
+        print(requestData.token)
+        self.googleUser().verify(requestData.token)
+
+    def googleUser(self):
+        return GoogleUser(appId = self.googleSignInAppId)
