@@ -2,13 +2,15 @@ import flask
 from flask import Flask
 import os
 import io
+from DB import *
 
 class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
     maxContentLength = 1000 * 1000
 
-    def __init__(self, flask: Flask = None, webPath = "/h-blog", googleSignInAppId = ""):
+    def __init__(self, flask: Flask, db: DB, webPath = "/h-blog", googleSignInAppId = ""):
         self.flask = flask
+        self.db = db
         self.webPath = webPath
         self.googleSignInAppId = googleSignInAppId
         self.dynamicLayoutEnabled = False
