@@ -59,11 +59,24 @@ namespace hblog {
             sendButton.text("Отправить");
             sendButton.addClass("w3-btn w3-black");
             sendButton.css("vertical-align", "top");
+            sendButton.on("click", () => this.sendComment());
             return sendButton;
         }
-    }
-}
 
-function hblog_CommentsPanel_ReceiveGoogleSignIn() {
-    hblog.CommentsPanel.instance.receiveGoogleSignIn();
+        sendComment() {
+            const requestData = {
+                token: App.instance.googleUser.getAuthResponse().id_token,
+                comment: this.textBox.val() as string,
+            };
+            jQuery.ajax(webPath + "/postComment", {
+                type: "POST",
+                data: JSON.stringify(requestData),
+                contentType: "application/json",
+                success: (data) => this.receiveSendCommentResult(data),
+            });
+        }
+
+        receiveSendCommentResult(response: string) {
+        }
+    }
 }

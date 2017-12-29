@@ -3,6 +3,8 @@ from flask import Flask
 import os
 import io
 from DB import *
+from GoogleUser import *
+from PostCommentRequest import*
 
 class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
@@ -35,6 +37,10 @@ class WebUI:
             lengthArg = flask.request.args.get("length")
             contentLength = self.maxContentLength if lengthArg == None else int(lengthArg)
             return self.getBlogEntryContent(filename, contentLength)
+        @self.flask.route(self.webPath + "/postComment", methods=["POST"])
+        def postComment():
+            self.postComment()
+        
 
     def registerStaticFileFolder(self, folder: str):
         url = self.webPath + '/' + folder + '/<string:fileName>'
@@ -79,4 +85,7 @@ class WebUI:
             return flask.send_file('../html-bin/layout.html', conditional=True)
 
     def postComment(self):
-        token = flask.request.args.get("googleUserToken")
+        print("postComment")
+        requestData = PostCommentRequest(dictionary = flask.request.get_json())
+        print(requestData.comment)
+        #GoogleUser().verify(token)

@@ -6,5 +6,8 @@ namespace hts {
             getImageUrl(): string;
             getEmail(): string;
         }
+        getAuthResponse(): {
+            id_token: string;
+        }
     }
 }
