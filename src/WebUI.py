@@ -11,6 +11,7 @@ class WebUI:
         self.flask = flask
         self.webPath = webPath
         self.googleSignInAppId = googleSignInAppId
+        self.dynamicLayoutEnabled = False
         if False: self.debugListFiles()
         self.prepareLayout()
         self.startRoutes()
@@ -20,10 +21,10 @@ class WebUI:
     def startRoutes(self):
         @self.flask.route(self.webPath)
         def main():
-            return self.getLayoutContent()
+            return self.deliverLayoutContent()
         @self.flask.route(self.webPath + "/page/<path:path>")
         def page(path):
-            return self.getLayoutContent()
+            return self.deliverLayoutContent()
         @self.flask.route(self.webPath + "/entries")
         def entries(): return self.getBlogEntryList()
         @self.flask.route(self.webPath + "/entry/<string:filename>")
@@ -42,9 +43,9 @@ class WebUI:
     
     def prepareLayout(self):
         with io.open('html-bin/layout.html', mode='w', encoding="utf-8") as outputFile:
-            outputFile.write(self.getLayoutContent())
+            outputFile.write(self.createLayoutContent())
 
-    def getLayoutContent(self):
+    def createLayoutContent(self):
         with io.open('src/layout.html', mode='r', encoding="utf-8") as file:
             content: str = file.read()
             content = content.replace('_web_path_', self.webPath)
@@ -68,3 +69,9 @@ class WebUI:
         with io.open('blog/' + filename, mode='r', encoding="utf-8") as file:
             content = file.read(length)
             return content
+
+    def deliverLayoutContent(self):
+        if self.dynamicLayoutEnabled:
+            return self.createLayoutContent()
+        else:
+            return flask.send_file('../html-bin/layout.html', conditional=True)
