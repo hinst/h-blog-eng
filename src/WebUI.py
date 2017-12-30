@@ -40,7 +40,7 @@ class WebUI:
             return self.getBlogEntryContent(filename, contentLength)
         @self.flask.route(self.webPath + "/postComment", methods=["POST"])
         def postComment():
-            self.postComment()
+            return self.postComment()
         
 
     def registerStaticFileFolder(self, folder: str):
@@ -86,7 +86,8 @@ class WebUI:
             return flask.send_file('../html-bin/layout.html', conditional=True)
 
     def postComment(self):
-        requestData = PostCommentRequest(dictionary = flask.request.get_json())
+        receivedJson = flask.request.get_json()
+        requestData = PostCommentRequest(receivedJson)
         googleUser = self.googleUser() 
         userValid = googleUser.verify(requestData.token)
         if userValid:
@@ -100,6 +101,7 @@ class WebUI:
             self.db.addComment(connection, userRow, commentRow)
             connection.commit()
             connection.close()
+            return "success"
 
     def googleUser(self):
         return GoogleUser(appId = self.googleSignInAppId)
