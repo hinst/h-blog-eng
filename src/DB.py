@@ -37,6 +37,12 @@ class DbCommentRow:
         self.topic = a[3]
         self.content = a[4]
 
+class FullComment:
+    def __init__(self):
+        self.comment: DbCommentRow = None
+        self.userName = ""
+        self.userRowId = 0
+
 class DB:
     def __init__(self):
         self.dbFilePath = "db.db"
@@ -81,9 +87,22 @@ class DB:
         comment.userId = user.userId
         self.addCommentDirect(connection, comment)
 
-    def readCommentsByTopic(self, connection: sqlite3.Connection, topic: str):
+    def readCommentsByTopic(self, connection: sqlite3.Connection, topic: str) -> [FullComment]:
         cursor = connection.cursor()
         cursor.execute("select rowid, userId, moment, topic, content from comments where topic=?", [topic])
         rows = cursor.fetchall()
         comments = [DbCommentRow(row) for row in rows]
-        return comments
+        fullComments = [self.resolveFullComment(connection, comment) for comment in comments]
+        return fullComments
+
+    def resolveFullComment(self, connection: sqlite3.Connection, comment: DbCommentRow) -> FullComment:
+        result = FullComment()
+        result.comment = comment
+        cursor = connection.cursor()
+        cursor.execute("select rowid, name from users where userId=?", [comment.userId])
+        rows = cursor.fetchall()
+        if len(rows) > 0:
+            row = rows[0]
+            result.userRowId = row[0]
+            result.userName = row[1]
+        return result
