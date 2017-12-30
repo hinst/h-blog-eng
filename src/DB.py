@@ -20,7 +20,7 @@ class DB:
         existingUser = self.readUserById(connection, user.userId)
         if existingUser != None:
             if existingUser.name != user.name:
-                connection.execute("update users set name=:name where userId=:userId", user.asDbDict())
+                connection.execute("update users set name=:name, picture=:picture where userId=:userId", user.asDbDict())
         else:
             connection.execute("insert into users (userId, name) values (:userId, :name)", user.asDbDict())
 

@@ -8,8 +8,10 @@ class GoogleUser:
 
     def __init__(self, appId: str):
         self.appId = appId
+        self.response: GoogleAuthResponse = None
         self.userId = ""
         self.userName = ""
+        self.pictureUrl = ""
         assert(len(appId) > 0)
         self.responseLengthLimit = 1000 * 1000
 
@@ -24,9 +26,10 @@ class GoogleUser:
         except urllib.error.HTTPError:
             requestSuccess = False
         if requestSuccess:
-            responseData = GoogleAuthResponse(json.loads(response))
-            self.userId = responseData.sub
-            self.userName = responseData.name
-            return (self.appId in responseData.aud)
+            self.response = GoogleAuthResponse(json.loads(response))
+            self.userId = self.response.sub
+            self.userName = self.response.name
+            self.pictureUrl = self.response.picture
+            return (self.appId in self.response.aud)
         else:
             return False

@@ -6,6 +6,8 @@ from DB import *
 from GoogleUser import *
 from PostCommentRequest import*
 from Config import *
+from DbUserRow import *
+from DbCommentRow import *
 
 class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
@@ -97,6 +99,7 @@ class WebUI:
             userRow = DbUserRow()
             userRow.userId = googleUser.userId
             userRow.name = googleUser.userName
+            userRow.picture = googleUser.pictureUrl
             commentRow = DbCommentRow()
             commentRow.content = requestData.comment
             commentRow.topic = requestData.topic
@@ -115,11 +118,14 @@ class WebUI:
         connection.close()
         uiComments = []
         for row in rows:
+            userRow: DbUserRow = row[0]
+            commentRow: DbCommentRow = row[1]
             uiComment = {
-                'rowid': row[1].rowid,
-                'content': row[1].content,
-                'moment': row[1].moment,
-                'userName': row[0].name,
-                'userRowId': row[0].rowid}
+                'rowid': commentRow.rowid,
+                'content': commentRow.content,
+                'moment': commentRow.moment,
+                'userName': userRow.name,
+                'userRowId': userRow.rowid,
+                'picture': userRow.picture}
             uiComments.append(uiComment)
         return flask.jsonify(uiComments)
