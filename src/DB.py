@@ -14,13 +14,13 @@ class DbUserRow:
 class DbCommentRow:
     def __init__(self):
         self.userId = ""
-        self.moment = str(datetime.now())
+        self.moment = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
         self.content = ""
         self.topic = ""
 
     def asDbDict(self):
-        return {'userId': self.userId, 
-            'moment': self.moment, 
+        return {'userId': self.userId,
+            'moment': self.moment,
             'topic': self.topic,
             'content': self.content}
 
@@ -65,6 +65,5 @@ class DB:
 
     def addComment(self, connection: sqlite3.Connection, user: DbUserRow, comment: DbCommentRow):
         self.updateUser(connection, user)
-        comment = DbCommentRow()
         comment.userId = user.userId
         self.addCommentDirect(connection, comment)
