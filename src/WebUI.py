@@ -111,16 +111,15 @@ class WebUI:
 
     def readCommentsByTopic(self, entryName: str):
         connection = self.db.connect()
-        comments: [FullComment] = self.db.readCommentsByTopic(connection, entryName)
+        rows = self.db.readCommentsByTopic(connection, entryName)
         connection.close()
         uiComments = []
-        for comment in comments:
-            c: FullComment = comment
+        for row in rows:
             uiComment = {
-                'rowid': c.comment.rowid,
-                'content': c.comment.content,
-                'moment': c.comment.moment,
-                'userName': c.userName,
-                'userRowId': c.userRowId}
+                'rowid': row[1].rowid,
+                'content': row[1].content,
+                'moment': row[1].moment,
+                'userName': row[0].name,
+                'userRowId': row[0].rowid}
             uiComments.append(uiComment)
         return flask.jsonify(uiComments)
