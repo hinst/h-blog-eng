@@ -37,14 +37,43 @@ namespace hblog {
 
         makeCommentBox(comment: CommentData): JQuery {
             const header = Panel.createElement("div");
-            header.text(comment.userName);
-            header.addClass('w3-leftbar');
+            header.css("border-top", "1px solid lightgrey");
+            header.append(this.makeDateBox(comment));
+            header.append(Panel.createElement("span").text(" "));
+            header.append(this.makeUserBox(comment));
+            header.append(Panel.createElement("span").text(" "));
+            header.append(this.makeIdBox(comment));
             const body = Panel.createElement("div");
             body.text(comment.content);
             const box = Panel.createElement("div");
             box.append(header);
             box.append(body);
             return box;
+        }
+
+        makeDateBox(comment: CommentData) {
+            const dateBox = Panel.createElement("span");
+            dateBox.css("background-color", App.instance.backgroundSubColor);
+            dateBox.css("vertical-align", "top");
+            dateBox.css("display", "inline-block");
+            dateBox.text(comment.moment);
+            dateBox.css("padding", "0 4px 0 4px");
+            return dateBox;
+        }
+
+        makeUserBox(comment: CommentData) {
+            const userBox = Panel.createElement("span");
+            userBox.text(comment.userName + " ");
+            return userBox;
+        }
+
+        makeIdBox(comment: CommentData) {
+            const idBox = Panel.createElement("span");
+            idBox.text("u" + comment.userRowId);
+            idBox.css("display", "inline-block");
+            idBox.css("background-color", App.instance.backgroundSubColor);
+            idBox.css("padding", "0 4px 0 4px");
+            return idBox;
         }
     }
 }
