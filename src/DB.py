@@ -19,7 +19,10 @@ class DbCommentRow:
         self.topic = ""
 
     def asDbDict(self):
-        return {'userId': self.userId, 'moment': self.moment, 'content': self.content}
+        return {'userId': self.userId, 
+            'moment': self.moment, 
+            'topic': self.topic,
+            'content': self.content}
 
 class DB:
     def __init__(self):
@@ -27,7 +30,7 @@ class DB:
 
     def start(self):
         connection = self.connect()
-        connection.execute("CREATE TABLE IF NOT EXISTS comments(userId TEXT, moment TEXT, content TEXT)")
+        connection.execute("CREATE TABLE IF NOT EXISTS comments(userId TEXT, moment TEXT, topic TEXT, content TEXT)")
         connection.execute("CREATE TABLE IF NOT EXISTS users(userId TEXT PRIMARY KEY, name TEXT)")
         connection.close()
 
@@ -56,7 +59,9 @@ class DB:
     
     def addCommentDirect(self, connection: sqlite3.Connection, commentRow: DbCommentRow):
         cursor = connection.cursor()
-        cursor.execute("insert into comments (userId, moment, content) values (:userId, :moment, :content)", commentRow.asDbDict())
+        cursor.execute("insert into comments (userId, moment, topic, content) " +
+                                     "values (:userId, :moment, :topic, :content)",
+            commentRow.asDbDict())
 
     def addComment(self, connection: sqlite3.Connection, user: DbUserRow, comment: DbCommentRow):
         self.updateUser(connection, user)
