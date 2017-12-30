@@ -2,3 +2,4 @@
 /node_modules
 /.vscode/.ropeproject/
 /db.db
+/db.db-journal
