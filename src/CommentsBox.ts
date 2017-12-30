@@ -25,5 +25,8 @@ namespace hblog {
         receiveError() {
             this.ui.text("Не удалось загрузить комментарии");
         }
+
+        makeCommentBox(comment: CommentData) {
+        }
     }
 }

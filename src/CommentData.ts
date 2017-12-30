@@ -1,7 +1,8 @@
 namespace hblog {
     export class CommentData {
-        userRowId: string;
+        rowid: string;
         content: string;
+        moment: string;
         userName: string;
     }
 }
