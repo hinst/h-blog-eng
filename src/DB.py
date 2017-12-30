@@ -34,7 +34,7 @@ class DB:
         return sqlite3.connect(self.dbFilePath)
 
     def updateUser(self, connection: sqlite3.Connection, user: DbUserRow):
-        existingUser = self.readUserById(connection, user.id)
+        existingUser = self.readUserById(connection, user.userId)
         if existingUser != None:
             if existingUser.name != user.name:
                 connection.execute("update users set name=:name where userId=:userId", user.asDbDict())
@@ -48,8 +48,6 @@ class DB:
         users = cursor.fetchall()
         if len(users) > 0:
             user = users[0]
-            print("users")
-            print(users)
             result = DbUserRow()
             result.userId = user[0]
             result.name = user[1]

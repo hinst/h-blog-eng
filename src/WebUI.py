@@ -13,7 +13,7 @@ class WebUI:
 
     def __init__(self, flask: Flask, db: DB, config: Config):
         self.flask = flask
-        self.db = db
+        self.db: DB = db
         self.webPath = config.webPath
         self.googleSignInAppId = config.googleSignInAppId
         self.dynamicLayoutEnabled = False
@@ -91,10 +91,10 @@ class WebUI:
         userValid = googleUser.verify(requestData.token)
         if userValid:
             userRow = DbUserRow()
-            userRow.id = googleUser.userId
+            userRow.userId = googleUser.userId
             userRow.name = googleUser.userName
             connection = self.db.connect()
-            self.db.updateUser(connection, userRow)
+            self.db.addComment(connection, userRow, requestData.comment)
             connection.commit()
             connection.close()
 
