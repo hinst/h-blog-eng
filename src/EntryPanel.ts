@@ -80,6 +80,7 @@ namespace hblog {
             this.entryBox.empty();
             this.entryBox.append(this.makeHeader());
             this.entryBox.append(this.makeBody(data));
+            this.commentsPanel.refresh();
         }
     }
 }

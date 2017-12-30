@@ -4,7 +4,9 @@ namespace hblog {
         entryName: string;
         textBox: JQuery;
         googleButton: JQuery;
-        commentsBox: CommentsBox;
+        public commentsBox: CommentsBox;
+        public sendButton: JQuery;
+        spinner: JQuery;
 
         public constructor(entryName: string) {
             super();
@@ -17,12 +19,21 @@ namespace hblog {
             this.ui.append(titleBar);
 
             this.commentsBox = new CommentsBox(this.entryName);
-            this.commentsBox.refresh();
+            this.commentsBox.ui.css("margin-top", "4px");
 
+            const textBoxDiv = Panel.createElement("div");
             this.textBox = Panel.createElement("textarea");
             this.textBox.css("width", "100%");
+            this.textBox.keydown((event) => {
+                if (event.ctrlKey && event.keyCode == 13)
+                    this.sendComment();
+            });
+            this.prepareSpinner(textBoxDiv);
+            textBoxDiv.append(this.textBox);
+            textBoxDiv.css("position", "relative");
 
             const sendButton = this.createSendButton();
+            this.sendButton = sendButton;
             const toolBar = Panel.createElement("div");
             toolBar.css("text-align", "right");
             toolBar.css("padding-top", "3px");
@@ -31,7 +42,7 @@ namespace hblog {
             toolBar.append(this.googleButton);
             toolBar.append(sendButton);
 
-            this.ui.append(this.textBox);
+            this.ui.append(textBoxDiv);
             this.ui.append(toolBar);
             this.ui.append(this.commentsBox.ui);
 
@@ -64,6 +75,7 @@ namespace hblog {
             sendButton.addClass("w3-btn w3-black");
             sendButton.css("vertical-align", "top");
             sendButton.on("click", () => this.sendComment());
+            sendButton.attr("title", "Ctrl+Enter");
             return sendButton;
         }
 
@@ -73,20 +85,44 @@ namespace hblog {
                 topic: this.entryName,
                 comment: this.textBox.val() as string,
             };
-            jQuery.ajax(webPath + "/postComment", {
-                type: "POST",
-                data: JSON.stringify(requestData),
-                contentType: "application/json",
-                complete: (jqXHR, status) => this.receiveSendCommentResult(jqXHR, status),
-            });
+            if (requestData.comment.length > 0) {
+                this.sendButton.addClass("spinner");
+                jQuery.ajax(webPath + "/postComment", {
+                    type: "POST",
+                    data: JSON.stringify(requestData),
+                    contentType: "application/json",
+                    complete: (jqXHR, status) => this.receiveSendCommentResult(jqXHR, status),
+                });
+            }
         }
 
         receiveSendCommentResult(jqXHR: JQuery.jqXHR, status: string) {
+            
             if (status == "success") {
                 this.textBox.val("");
+                this.commentsBox.refresh();
             } else {
                 alert("Не удалось добавить комментарий");
             }
+        }
+
+        public refresh() {
+            this.commentsBox.refresh();
+        }
+
+        prepareSpinner(parent: JQuery) {
+            const outer = Panel.createElement("div");
+            outer.css("display", "table");
+            outer.css("width", "100%");
+            outer.css("height", "100%");
+            outer.css("position", "absolute");
+            const middle = Panel.createElement("div");
+            middle.css("display", "table-cell");
+            middle.css("vertical-align", "middle");
+            middle.append(App.instance.createSpinner());
+            outer.append(middle);
+            this.spinner = outer;
+            parent.append(this.spinner);
         }
     }
 }
