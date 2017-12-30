@@ -8,6 +8,7 @@ namespace hblog {
 
         public constructor(entryName: string) {
             super();
+            this.entryName = entryName;
             CommentsPanel.instance = this;
             this.ui = Panel.createElement("div");
 
@@ -66,6 +67,7 @@ namespace hblog {
         sendComment() {
             const requestData = {
                 token: App.instance.googleUser.getAuthResponse().id_token,
+                topic: this.entryName,
                 comment: this.textBox.val() as string,
             };
             jQuery.ajax(webPath + "/postComment", {
