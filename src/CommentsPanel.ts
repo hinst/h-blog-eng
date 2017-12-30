@@ -16,6 +16,9 @@ namespace hblog {
             titleBar.css("background-color", App.instance.backgroundSubColor);
             this.ui.append(titleBar);
 
+            this.commentsBox = new CommentsBox(this.entryName);
+            this.commentsBox.refresh();
+
             this.textBox = Panel.createElement("textarea");
             this.textBox.css("width", "100%");
 
@@ -29,6 +32,7 @@ namespace hblog {
             toolBar.append(sendButton);
 
             this.ui.append(this.textBox);
+            this.ui.append(this.commentsBox.ui);
             this.ui.append(toolBar);
 
             App.instance.googleSignInSuccessReceivers.push((a) => this.receiveGoogleSignInSuccess(a));
