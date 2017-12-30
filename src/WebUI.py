@@ -120,7 +120,6 @@ class WebUI:
         for row in rows:
             userRow: DbUserRow = row[0]
             commentRow: DbCommentRow = row[1]
-            print(userRow)
             uiComment = {
                 'rowid': commentRow.rowid,
                 'content': commentRow.content,
