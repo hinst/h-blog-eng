@@ -19,12 +19,10 @@ class DB:
     def updateUser(self, connection: sqlite3.Connection, user: DbUserRow):
         existingUser = self.readUserById(connection, user.id)
         if existingUser != None:
-            #if existingUser.name != user.name:
-                print("updating")
+            if existingUser.name != user.name:
                 connection.execute("update users set name=:name where userId=:userId", 
                     {'name': user.name, 'userId': user.id})
         else:
-            print("inserting")
             connection.execute("insert into users (userId, name) values (:userId, :name)",
                 {'name': user.name, 'userId': user.id})
 
