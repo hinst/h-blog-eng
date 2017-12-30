@@ -86,10 +86,17 @@ class WebUI:
             return flask.send_file('../html-bin/layout.html', conditional=True)
 
     def postComment(self):
-        print("postComment")
         requestData = PostCommentRequest(dictionary = flask.request.get_json())
-        print(requestData.token)
-        self.googleUser().verify(requestData.token)
+        googleUser = self.googleUser() 
+        userValid = googleUser.verify(requestData.token)
+        if userValid:
+            userRow = DbUserRow()
+            userRow.id = googleUser.userId
+            userRow.name = googleUser.userName
+            connection = self.db.connect()
+            self.db.updateUser(connection, userRow)
+            connection.commit()
+            connection.close()
 
     def googleUser(self):
         return GoogleUser(appId = self.googleSignInAppId)
