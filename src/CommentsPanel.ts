@@ -1,15 +1,14 @@
 /// <reference path="Panel.ts"/>
 namespace hblog {
     export class CommentsPanel extends Panel {
-        public entryName: string;
-        public textBox: JQuery;
-        public static instance: CommentsPanel;
-        public googleButton: JQuery;
+        entryName: string;
+        textBox: JQuery;
+        googleButton: JQuery;
+        commentsBox: CommentsBox;
 
         public constructor(entryName: string) {
             super();
             this.entryName = entryName;
-            CommentsPanel.instance = this;
             this.ui = Panel.createElement("div");
 
             const titleBar = Panel.createElement("div");

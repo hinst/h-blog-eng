@@ -18,9 +18,12 @@ namespace hblog {
         }
 
         receive(data: Array<CommentData>) {
+            for (const comment of data) {
+            }
         }
 
         receiveError() {
+            this.ui.text("Не удалось загрузить комментарии");
         }
     }
 }
