@@ -12,7 +12,7 @@ from DbCommentRow import *
 class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
     maxContentLength = 1000 * 1000
-    maxCommentLength = 10
+    maxCommentLength = 100 * 1000
 
     def __init__(self, flask: Flask, db: DB, config: Config):
         self.flask = flask

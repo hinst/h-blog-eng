@@ -6,7 +6,8 @@ namespace hblog {
         googleButton: JQuery;
         commentsBox: CommentsBox;
         spinner: JQuery;
-        senderNameBox: JQuery;
+        senderBox: JQuery;
+        senderSpan: JQuery;
 
         public constructor(entryName: string) {
             super();
@@ -34,14 +35,15 @@ namespace hblog {
             textBoxDiv.append(this.textBox);
             textBoxDiv.css("position", "relative");
 
-            this.senderNameBox = this.makeSenderNameBox();
+            const senderBox = this.makeSenderNameBox();
+            this.senderBox = senderBox;
             const sendButton = this.createSendButton();
             const toolBar = Panel.createElement("div");
             toolBar.css("text-align", "right");
             toolBar.css("padding-top", "3px");
             toolBar.css("padding-bottom", "3px");
             this.googleButton = this.createGoogleButton();
-            toolBar.append(this.senderNameBox);
+            toolBar.append(senderBox);
             toolBar.append(this.googleButton);
             toolBar.append(sendButton);
 
@@ -54,7 +56,8 @@ namespace hblog {
 
         private receiveGoogleSignInSuccess(googleUser: hts.GoogleUser) {
             this.googleButton.hide();
-            this.senderNameBox.text(googleUser.getBasicProfile().getName());
+            this.senderSpan.text(googleUser.getBasicProfile().getName());
+            this.senderBox.show();
         }
 
         private createGoogleButton(): JQuery {
@@ -113,10 +116,25 @@ namespace hblog {
         private makeSenderNameBox() {
             const logOut = Panel.createElement("a");
             logOut.text("выйти");
+            logOut.attr("href", "#");
+            logOut.on("click", (event) => {
+                event.preventDefault();
+                this.receiveLogOutClick()
+            });
+            logOut.css("margin-right", "8px");
             const box = Panel.createElement("div");
             box.css("display", "inline-block");
             box.css("padding", "8px 8px 0 0");
+            const senderSpan = Panel.createElement("span");
+            this.senderSpan = senderSpan;
+            box.append(logOut);
+            box.append(senderSpan);
+            box.hide();
             return box;
+        }
+
+        private receiveLogOutClick() {
+            hts.logOut(() => location.reload());
         }
     }
 }

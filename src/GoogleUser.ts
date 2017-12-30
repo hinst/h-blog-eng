@@ -10,4 +10,9 @@ namespace hts {
             id_token: string;
         }
     }
+
+    export function logOut(onSuccess: Function) {
+        var auth2 = window["gapi"].auth2.getAuthInstance();
+        auth2.signOut().then(onSuccess);
+    }
 }
