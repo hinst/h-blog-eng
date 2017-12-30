@@ -111,8 +111,16 @@ class WebUI:
 
     def readCommentsByTopic(self, entryName: str):
         connection = self.db.connect()
-        comments = self.db.readCommentsByTopic(connection, entryName)
+        comments: [FullComment] = self.db.readCommentsByTopic(connection, entryName)
         connection.close()
-        uiComments = [{'rowid': comment.rowid, 'moment': comment.moment, 'content': comment.content} 
-            for comment in comments]
+        uiComments = []
+        for comment in comments:
+            c: FullComment = comment
+            uiComment = {
+                'rowid': c.comment.rowid,
+                'content': c.comment.content,
+                'moment': c.comment.moment,
+                'userName': c.userName,
+                'userRowId': c.userRowId}
+            uiComments.append(uiComment)
         return flask.jsonify(uiComments)

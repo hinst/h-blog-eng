@@ -13,13 +13,12 @@ class DbUserRow:
 
 class DbCommentRow:
     def __init__(self, dbList: list = None):
-        if dbList == None:
-            self.rowid = 0
-            self.userId = ""
-            self.moment = datetime.strftime(datetime.utcnow(), "%Y-%m-%d %H:%M:%S")
-            self.content = ""
-            self.topic = ""
-        else:
+        self.rowid = 0
+        self.userId = ""
+        self.moment = datetime.strftime(datetime.utcnow(), "%Y-%m-%d %H:%M:%S")
+        self.content = ""
+        self.topic = ""
+        if dbList != None:
             self.load(dbList)
 
     def asDbDict(self):
@@ -38,8 +37,8 @@ class DbCommentRow:
         self.content = a[4]
 
 class FullComment:
-    def __init__(self):
-        self.comment: DbCommentRow = None
+    def __init__(self, comment: DbCommentRow = None):
+        self.comment = comment
         self.userName = ""
         self.userRowId = 0
 
@@ -96,8 +95,7 @@ class DB:
         return fullComments
 
     def resolveFullComment(self, connection: sqlite3.Connection, comment: DbCommentRow) -> FullComment:
-        result = FullComment()
-        result.comment = comment
+        result = FullComment(comment)
         cursor = connection.cursor()
         cursor.execute("select rowid, name from users where userId=?", [comment.userId])
         rows = cursor.fetchall()
