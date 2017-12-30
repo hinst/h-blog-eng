@@ -109,9 +109,10 @@ class WebUI:
     def googleUser(self):
         return GoogleUser(appId = self.googleSignInAppId)
 
-    def readCommentsByTopic(self, entryName):
-        comments = self.db.readCommentsByTopic(entryName)
-        for comment in comments:
-            comment.userId = ""
-            comment.topic = ""
-        return flask.jsonify(comments)
+    def readCommentsByTopic(self, entryName: str):
+        connection = self.db.connect()
+        comments = self.db.readCommentsByTopic(connection, entryName)
+        connection.close()
+        uiComments = [{'rowid': comment.rowid, 'moment': comment.moment, 'content': comment.content} 
+            for comment in comments]
+        return flask.jsonify(uiComments)
