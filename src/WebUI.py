@@ -93,6 +93,9 @@ class WebUI:
             userRow = DbUserRow()
             userRow.userId = googleUser.userId
             userRow.name = googleUser.userName
+            comment = DbCommentRow()
+            comment.content = requestData.comment
+            comment.topic = requestData.topic
             connection = self.db.connect()
             self.db.addComment(connection, userRow, requestData.comment)
             connection.commit()

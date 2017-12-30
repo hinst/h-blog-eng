@@ -16,6 +16,7 @@ class DbCommentRow:
         self.userId = ""
         self.moment = str(datetime.now())
         self.content = ""
+        self.topic = ""
 
     def asDbDict(self):
         return {'userId': self.userId, 'moment': self.moment, 'content': self.content}
@@ -57,9 +58,8 @@ class DB:
         cursor = connection.cursor()
         cursor.execute("insert into comments (userId, moment, content) values (:userId, :moment, :content)", commentRow.asDbDict())
 
-    def addComment(self, connection: sqlite3.Connection, user: DbUserRow, content: str):
+    def addComment(self, connection: sqlite3.Connection, user: DbUserRow, comment: DbCommentRow):
         self.updateUser(connection, user)
         comment = DbCommentRow()
         comment.userId = user.userId
-        comment.content = content
         self.addCommentDirect(connection, comment)
