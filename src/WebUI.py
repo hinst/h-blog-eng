@@ -12,6 +12,7 @@ from DbCommentRow import *
 class WebUI:
     fileDirs = ['css-3rd', 'css-3rd/highlight.js', 'js-3rd', 'html-bin', 'js-bin', 'css']
     maxContentLength = 1000 * 1000
+    maxCommentLength = 10
 
     def __init__(self, flask: Flask, db: DB, config: Config):
         self.flask = flask
@@ -93,6 +94,8 @@ class WebUI:
     def postComment(self):
         receivedJson = flask.request.get_json()
         requestData = PostCommentRequest(receivedJson)
+        if len(requestData.comment) > self.maxCommentLength:
+            return
         googleUser = self.googleUser() 
         userValid = googleUser.verify(requestData.token)
         if userValid:

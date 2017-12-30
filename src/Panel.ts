@@ -17,7 +17,7 @@ namespace hblog {
         public refresh() {
         }
 
-        public createCenterOverlay(child: JQuery) {
+        public static createCenterOverlay(child: JQuery) {
             const outer = Panel.createElement("div");
             outer.css("display", "table");
             outer.css("width", "100%");
@@ -28,6 +28,7 @@ namespace hblog {
             middle.css("vertical-align", "middle");
             middle.append(child);
             outer.append(middle);
+            return outer;
         }
     }
 }

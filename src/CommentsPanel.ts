@@ -4,9 +4,9 @@ namespace hblog {
         entryName: string;
         textBox: JQuery;
         googleButton: JQuery;
-        public commentsBox: CommentsBox;
-        public sendButton: JQuery;
+        commentsBox: CommentsBox;
         spinner: JQuery;
+        senderNameBox: JQuery;
 
         public constructor(entryName: string) {
             super();
@@ -28,17 +28,20 @@ namespace hblog {
                 if (event.ctrlKey && event.keyCode == 13)
                     this.sendComment();
             });
-            this.prepareSpinner(textBoxDiv);
+            this.spinner = App.instance.createSpinnerOverlay();
+            this.spinner.hide();
+            textBoxDiv.append(this.spinner);
             textBoxDiv.append(this.textBox);
             textBoxDiv.css("position", "relative");
 
+            this.senderNameBox = this.makeSenderNameBox();
             const sendButton = this.createSendButton();
-            this.sendButton = sendButton;
             const toolBar = Panel.createElement("div");
             toolBar.css("text-align", "right");
             toolBar.css("padding-top", "3px");
             toolBar.css("padding-bottom", "3px");
             this.googleButton = this.createGoogleButton();
+            toolBar.append(this.senderNameBox);
             toolBar.append(this.googleButton);
             toolBar.append(sendButton);
 
@@ -51,10 +54,7 @@ namespace hblog {
 
         receiveGoogleSignInSuccess(googleUser: hts.GoogleUser) {
             this.googleButton.hide();
-        }
-
-        public receiveGoogleSignIn() {
-            this.googleButton.hide();
+            this.senderNameBox.text(googleUser.getBasicProfile().getName());
         }
 
         public createGoogleButton(): JQuery {
@@ -85,8 +85,8 @@ namespace hblog {
                 topic: this.entryName,
                 comment: this.textBox.val() as string,
             };
+            this.spinner.show();
             if (requestData.comment.length > 0) {
-                this.sendButton.addClass("spinner");
                 jQuery.ajax(webPath + "/postComment", {
                     type: "POST",
                     data: JSON.stringify(requestData),
@@ -97,7 +97,7 @@ namespace hblog {
         }
 
         receiveSendCommentResult(jqXHR: JQuery.jqXHR, status: string) {
-            
+            this.spinner.hide();
             if (status == "success") {
                 this.textBox.val("");
                 this.commentsBox.refresh();
@@ -110,19 +110,11 @@ namespace hblog {
             this.commentsBox.refresh();
         }
 
-        prepareSpinner(parent: JQuery) {
-            const outer = Panel.createElement("div");
-            outer.css("display", "table");
-            outer.css("width", "100%");
-            outer.css("height", "100%");
-            outer.css("position", "absolute");
-            const middle = Panel.createElement("div");
-            middle.css("display", "table-cell");
-            middle.css("vertical-align", "middle");
-            middle.append(App.instance.createSpinner());
-            outer.append(middle);
-            this.spinner = outer;
-            parent.append(this.spinner);
+        makeSenderNameBox() {
+            const box = Panel.createElement("div");
+            box.css("display", "inline-block");
+            box.css("padding", "8px 8px 0 0");
+            return box;
         }
     }
 }
