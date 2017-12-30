@@ -41,6 +41,9 @@ class WebUI:
         @self.flask.route(self.webPath + "/postComment", methods=["POST"])
         def postComment():
             return self.postComment()
+        @self.flask.route(self.webPath + "/comments/<string:entryName>")
+        def readCommentsByTopic(entryName):
+            return self.readCommentsByTopic(entryName)
         
 
     def registerStaticFileFolder(self, folder: str):
@@ -105,3 +108,10 @@ class WebUI:
 
     def googleUser(self):
         return GoogleUser(appId = self.googleSignInAppId)
+
+    def readCommentsByTopic(self, entryName):
+        comments = self.db.readCommentsByTopic(entryName)
+        for comment in comments:
+            comment.userId = ""
+            comment.topic = ""
+        return flask.jsonify(comments)

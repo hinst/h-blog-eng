@@ -12,17 +12,30 @@ class DbUserRow:
         return {'userId': self.userId, 'name': self.name}
 
 class DbCommentRow:
-    def __init__(self):
-        self.userId = ""
-        self.moment = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-        self.content = ""
-        self.topic = ""
+    def __init__(self, dbList: list = None):
+        if dbList == None:
+            self.rowid = 0
+            self.userId = ""
+            self.moment = datetime.strftime(datetime.utcnow(), "%Y-%m-%d %H:%M:%S")
+            self.content = ""
+            self.topic = ""
+        else:
+            self.load(dbList)
 
     def asDbDict(self):
         return {'userId': self.userId,
             'moment': self.moment,
             'topic': self.topic,
             'content': self.content}
+
+    dbColumnListStr = "rowid, userId, moment, topic, content"
+
+    def load(self, a: list):
+        self.rowid = a[0]
+        self.userId = a[1]
+        self.moment = a[2]
+        self.topic = a[3]
+        self.content = a[4]
 
 class DB:
     def __init__(self):
@@ -59,11 +72,18 @@ class DB:
     
     def addCommentDirect(self, connection: sqlite3.Connection, commentRow: DbCommentRow):
         cursor = connection.cursor()
-        cursor.execute("insert into comments (userId, moment, topic, content) " +
-                                     "values (:userId, :moment, :topic, :content)",
-            commentRow.asDbDict())
+        queryStr = "insert into comments (userId, moment, topic, content)"
+        queryStr +=             " values (:userId, :moment, :topic, :content)"
+        cursor.execute(queryStr, commentRow.asDbDict())
 
     def addComment(self, connection: sqlite3.Connection, user: DbUserRow, comment: DbCommentRow):
         self.updateUser(connection, user)
         comment.userId = user.userId
         self.addCommentDirect(connection, comment)
+
+    def readCommentsByTopic(self, connection: sqlite3.Connection, topic: str):
+        cursor = connection.cursor()
+        cursor.execute("select rowid, userId, moment, topic, content from comments where topic=?", [topic])
+        rows = cursor.fetchall()
+        comments = [DbCommentRow(row) for row in rows]
+        return comments
