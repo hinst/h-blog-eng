@@ -74,11 +74,16 @@ namespace hblog {
                 type: "POST",
                 data: JSON.stringify(requestData),
                 contentType: "application/json",
-                success: (data) => this.receiveSendCommentResult(data),
+                complete: (jqXHR, status) => this.receiveSendCommentResult(jqXHR, status),
             });
         }
 
-        receiveSendCommentResult(response: string) {
+        receiveSendCommentResult(jqXHR: JQuery.jqXHR, status: string) {
+            if (status == "success") {
+                this.textBox.val("");
+            } else {
+                alert("Не удалось добавить комментарий");
+            }
         }
     }
 }
