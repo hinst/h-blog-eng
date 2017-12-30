@@ -32,8 +32,8 @@ namespace hblog {
             toolBar.append(sendButton);
 
             this.ui.append(this.textBox);
-            this.ui.append(this.commentsBox.ui);
             this.ui.append(toolBar);
+            this.ui.append(this.commentsBox.ui);
 
             App.instance.googleSignInSuccessReceivers.push((a) => this.receiveGoogleSignInSuccess(a));
         }

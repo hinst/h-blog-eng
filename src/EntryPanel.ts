@@ -10,11 +10,13 @@ namespace hblog {
             super();
             this.entryName = entryName;
             this.ui = Panel.createElement("div")
+            this.ui.css("margin", "1px");
             this.entryBox = Panel.createElement("div");
             this.ui.append(this.entryBox);
 
             this.commentsPanel = new CommentsPanel(entryName);
             this.commentsPanel.ui.css("max-width", this.maxWidth + "px");
+            //this.commentsPanel.ui.css("margin", "0 8px 8px 8px");
             this.ui.append(this.commentsPanel.ui);
         }
 
@@ -52,9 +54,9 @@ namespace hblog {
             const content = this.transformText(data);
             const body = Panel.createElement("div");
             body.css("max-width", this.maxWidth + "px");
-            body.css("margin-left", "8px");
-            body.css("margin-right", "8px");
-            body.css("margin-bottom", "8px");
+            // body.css("margin-left", "8px");
+            // body.css("margin-right", "8px");
+            // body.css("margin-bottom", "8px");
             body.html(content);
             this.postProcesCodes(body);
             return body;
