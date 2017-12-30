@@ -38,6 +38,7 @@ namespace hblog {
         makeCommentBox(comment: CommentData): JQuery {
             const header = Panel.createElement("div");
             header.css("border-top", "1px solid lightgrey");
+            header.append(this.makePictureBox(comment));
             header.append(this.makeDateBox(comment));
             header.append(Panel.createElement("span").text(" "));
             header.append(this.makeUserBox(comment));
@@ -74,6 +75,15 @@ namespace hblog {
             idBox.css("background-color", App.instance.backgroundSubColor);
             idBox.css("padding", "0 4px 0 4px");
             return idBox;
+        }
+
+        makePictureBox(comment: CommentData) {
+            const box = Panel.createElement("div");
+            box.css("display", "inline-box");
+            const img = Panel.createElement("img");
+            img.attr("src", comment.picture);
+            box.append(img);
+            return box;
         }
     }
 }

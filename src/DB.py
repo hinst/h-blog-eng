@@ -10,7 +10,7 @@ class DB:
     def start(self):
         connection = self.connect()
         connection.execute("CREATE TABLE IF NOT EXISTS comments(userId TEXT, moment TEXT, topic TEXT, content TEXT)")
-        connection.execute("CREATE TABLE IF NOT EXISTS users(userId TEXT PRIMARY KEY, name TEXT)")
+        connection.execute("CREATE TABLE IF NOT EXISTS users(userId TEXT PRIMARY KEY, name TEXT, picture TEXT)")
         connection.close()
 
     def connect(self):
@@ -19,10 +19,10 @@ class DB:
     def updateUser(self, connection: sqlite3.Connection, user: DbUserRow):
         existingUser = self.readUserById(connection, user.userId)
         if existingUser != None:
-            if existingUser.name != user.name:
+            if (existingUser.name != user.name) or (existingUser.picture != user.picture):
                 connection.execute("update users set name=:name, picture=:picture where userId=:userId", user.asDbDict())
         else:
-            connection.execute("insert into users (userId, name) values (:userId, :name)", user.asDbDict())
+            connection.execute("insert into users (userId, name, picture) values (:userId, :name, :picture)", user.asDbDict())
 
     def readUserById(self, connection: sqlite3.Connection, id: str) -> DbUserRow:
         result: DbUserRow = None

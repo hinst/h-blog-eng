@@ -4,5 +4,6 @@ namespace hblog {
         content: string;
         moment: string;
         userName: string;
+        picture: string;
     }
 }
