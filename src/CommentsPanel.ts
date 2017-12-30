@@ -52,12 +52,12 @@ namespace hblog {
             App.instance.googleSignInSuccessReceivers.push((a) => this.receiveGoogleSignInSuccess(a));
         }
 
-        receiveGoogleSignInSuccess(googleUser: hts.GoogleUser) {
+        private receiveGoogleSignInSuccess(googleUser: hts.GoogleUser) {
             this.googleButton.hide();
             this.senderNameBox.text(googleUser.getBasicProfile().getName());
         }
 
-        public createGoogleButton(): JQuery {
+        private createGoogleButton(): JQuery {
             const googleButton = Panel.createElement("button");
             googleButton.text("Войти в Google");
             googleButton.addClass("w3-btn w3-black");
@@ -69,7 +69,7 @@ namespace hblog {
             return googleButton;
         }
 
-        public createSendButton(): JQuery {
+        private createSendButton(): JQuery {
             const sendButton = Panel.createElement("button");
             sendButton.text("Отправить");
             sendButton.addClass("w3-btn w3-black");
@@ -79,7 +79,7 @@ namespace hblog {
             return sendButton;
         }
 
-        sendComment() {
+        private sendComment() {
             const requestData = {
                 token: App.instance.googleUser.getAuthResponse().id_token,
                 topic: this.entryName,
@@ -96,7 +96,7 @@ namespace hblog {
             }
         }
 
-        receiveSendCommentResult(jqXHR: JQuery.jqXHR, status: string) {
+        private receiveSendCommentResult(jqXHR: JQuery.jqXHR, status: string) {
             this.spinner.hide();
             if (status == "success") {
                 this.textBox.val("");
@@ -110,7 +110,9 @@ namespace hblog {
             this.commentsBox.refresh();
         }
 
-        makeSenderNameBox() {
+        private makeSenderNameBox() {
+            const logOut = Panel.createElement("a");
+            logOut.text("выйти");
             const box = Panel.createElement("div");
             box.css("display", "inline-block");
             box.css("padding", "8px 8px 0 0");
