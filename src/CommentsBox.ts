@@ -49,7 +49,7 @@ namespace hblog {
 
         makeDateBox(comment: CommentData) {
             const dateBox = Panel.createElement("div");
-            dateBox.text(comment.moment);
+            dateBox.text(hts.DateTime.parseV1(comment.moment).toLocaleString());
             return dateBox;
         }
 
