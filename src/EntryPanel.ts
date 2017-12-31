@@ -56,7 +56,7 @@ namespace hblog {
             body.css("max-width", this.maxWidth + "px");
             // body.css("margin-left", "8px");
             // body.css("margin-right", "8px");
-            // body.css("margin-bottom", "8px");
+            body.css("margin-bottom", "8px");
             body.html(content);
             this.postProcesCodes(body);
             return body;
