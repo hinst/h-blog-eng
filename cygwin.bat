@@ -1,0 +1,1 @@
+C:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico /bin/env CHERE_INVOKING=1 /bin/bash -l
